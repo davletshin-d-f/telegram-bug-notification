@@ -29,10 +29,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Davletshindf\\TelegramBugNotification\\Laravel\\ClientServiceProvider"
+                "Davletshindf\\TelegramBugNotification\\Providers\\TelegramServiceProvider"
             ],
             "aliases": {
-                "TelegramClient": "Davletshindf\\TelegramBugNotification\\Laravel\\ClientFacade"
+                "Telegram": "Davletshindf\\TelegramBugNotification\\Facades\\Telegram"
             }
         }
     },
