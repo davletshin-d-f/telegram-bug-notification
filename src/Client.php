@@ -26,10 +26,10 @@ class Client
                 'form_params' => [
                     'chat_id' => $this->config->getChatId(),
                     'text' => "<b>Error</b>\n"
-                        . "<b><i>" . $_SERVER['SERVER_NAME'] . "</i></b>\n"
+                        . "<b><i>" . $_SERVER['HTTP_HOST'] . "</i></b>\n"
                         . $exception->getFile() . ":" . $exception->getLine() . "\n"
                         . "<i>" . $exception->getMessage() . "</i>\n\n"
-                        . "#error #" . str_replace('.', '_', $_SERVER['SERVER_NAME']) . " #" . str_replace('\\', '_', get_class($exception)),
+                        . "#error #" . str_replace('.', '_', $_SERVER['HTTP_HOST']) . " #" . str_replace('\\', '_', get_class($exception)),
                     'parse_mode' => 'html',
                 ]
             ];
