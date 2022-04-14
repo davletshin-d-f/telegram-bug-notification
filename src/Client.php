@@ -2,6 +2,7 @@
 
 namespace Davletshindf\TelegramBugNotification;
 
+use DateTime;
 use GuzzleHttp\Client as GuzzleClient;
 use Throwable;
 
@@ -29,12 +30,25 @@ class Client
                         . "<b><i>" . $_SERVER['HTTP_HOST'] . "</i></b>\n"
                         . $exception->getFile() . ":" . $exception->getLine() . "\n"
                         . "<i>" . $exception->getMessage() . "</i>\n\n"
-                        . "#error #" . str_replace('.', '_', $_SERVER['HTTP_HOST']) . " #" . str_replace('\\', '_', get_class($exception)),
+                        . "#error "
+                        . $this->getHashtag($_SERVER['HTTP_HOST']) . " "
+                        . $this->getHashtag(get_class($exception)) . " "
+                        . $this->getHashtag('date_' . (new DateTime())->format('Y_m_d')),
                     'parse_mode' => 'html',
                 ]
             ];
 
             $this->guzzle->post($url, $params);
-        } catch (Throwable) {}
+        } catch (Throwable) {
+        }
+    }
+
+    private function getHashtag(string $text): string
+    {
+        $text = str_replace('.', '_', $text);
+
+        $text = str_replace('\\', '_', $text);
+
+        return '#' . preg_replace("/[^a-zA-ZА-Яа-я0-9_\s]/", "", $text);
     }
 }
