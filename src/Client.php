@@ -18,6 +18,8 @@ class Client
     public function notify(Throwable $exception): void
     {
         try {
+            $stacktrace = (new Stacktrace($this->config, $exception))->getStacktrace();
+
             $url = $this->config->getBaseUrl()
                 . '/bot'
                 . $this->config->getToken()
@@ -30,6 +32,7 @@ class Client
                         . "<b><i>" . $_SERVER['HTTP_HOST'] . "</i></b>\n"
                         . $exception->getFile() . ":" . $exception->getLine() . "\n"
                         . "<i>" . $exception->getMessage() . "</i>\n\n"
+                        . $stacktrace . " "
                         . "#error "
                         . $this->getHashtag($_SERVER['HTTP_HOST']) . " "
                         . $this->getHashtag(get_class($exception)) . " "
