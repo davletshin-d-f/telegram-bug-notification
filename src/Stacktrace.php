@@ -58,7 +58,7 @@ class Stacktrace
         $this->fileDir = $this->config->getFileStorage();
 
         if (!is_dir($this->fileDir)) {
-            mkdir($this->fileDir, 0644);
+            mkdir($this->fileDir, 0755);
         }
 
         $dateTime = (new DateTime())->format('Y_m_d_H_i_s');
